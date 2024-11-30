@@ -2,6 +2,7 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { XIcon } from "lucide-react";
 import { useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 interface ImageUploadModalProps {
   open: boolean;
@@ -15,6 +16,7 @@ export default function ImageUploadModal(props: ImageUploadModalProps) {
   const uploadFiles = (filesList: FileList | null) => {
     if (!filesList || filesList.length === 0) {
       console.log(">>> no files uploaded");
+      toast.error("Please select files");
       return;
     }
 
@@ -27,8 +29,10 @@ export default function ImageUploadModal(props: ImageUploadModalProps) {
     if (isAnyOfTheFilesNotImage) {
       if (files.length === 1) {
         console.log(">>> file uploaded should be of type image");
+        toast.error("File uploaded should be of type image");
       } else {
         console.log(">>> all files uploaded should be of type image");
+        toast.error("All files uploaded should be of type image");
       }
 
       return;
@@ -36,6 +40,7 @@ export default function ImageUploadModal(props: ImageUploadModalProps) {
 
     console.log(">>> files", Array.from(files));
     // TODO: add file upload logic
+    toast.success("Files uploaded " + files.length);
   };
 
   return (
