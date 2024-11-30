@@ -1,3 +1,4 @@
+import Sidepanel from "@/components/sidepanel";
 import { Photo } from "@/components/types";
 import ImageUploadModal from "@/components/ui/image-upload-modal";
 import PhotoGallery from "@/components/ui/photo-gallery";
@@ -28,7 +29,7 @@ export default async function Index() {
     <>
       <main className="flex-1 flex flex-col gap-6 px-4">
         Welcome {user.email}
-        <ImageUploadModal open={true}>hello</ImageUploadModal>
+        <Sidepanel />
         <div>
           <h2 className="my-4 font-bold text-3xl">Photo Slider</h2>
           <PhotoSlider photos={photos} />
