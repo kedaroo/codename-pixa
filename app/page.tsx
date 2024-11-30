@@ -9,7 +9,7 @@ export default async function Index() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return <p>No</p>
+    return <p>Welcome to our app!</p>
   }
   return (
     <>
