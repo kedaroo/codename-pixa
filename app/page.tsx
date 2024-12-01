@@ -1,3 +1,4 @@
+import LandingPage from "@/components/landing-page";
 import Sidepanel from "@/components/sidepanel";
 import { Photo } from "@/components/types";
 import ImageUploadModal from "@/components/ui/image-upload-modal";
@@ -24,7 +25,7 @@ export default async function Index() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return <p>Welcome to our app!</p>;
+    return <LandingPage/>;
   }
 
   const { data, error } = await supabase

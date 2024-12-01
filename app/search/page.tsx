@@ -34,10 +34,14 @@ export default async function Search(props: IPageProps) {
 
   const { data, error } = await supabase.rpc("match_images", {
     query_embedding: embedding.values,
-    match_threshold: 0.3,
+    match_threshold: 0.5,
     match_count: 100,
     match_user_id: user.id,
   });
+  
+  if(error){
+    return <p>Couldn't find anything {":("}</p>
+  }
 
   const photos: Photo[] = []
 
