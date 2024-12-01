@@ -33,7 +33,6 @@ export const uploadAllImages = async (images: File[]) => {
     // await Promise.all(imageUploads);
 
     for (const img of images) {
-      console.log(`Uploading ${img.name}...`)
       const { data, error } = await supabase.storage
         .from("pictures")
         .upload(user.id + "/" + nanoid(), img);
@@ -43,7 +42,6 @@ export const uploadAllImages = async (images: File[]) => {
         throw new Error("Image couldn't get uploaded");
       }
 
-      console.log(`Generating signed URL ${img.name}...`)
       const { data: signedData, error: signedError } = await supabase.storage
         .from("pictures")
         .createSignedUrl(data.path, 60 * 60);
@@ -53,7 +51,14 @@ export const uploadAllImages = async (images: File[]) => {
         throw new Error("Image couldn't get uploaded");
       }
 
-      console.log(`Generated signed URL: ${signedData.signedUrl}`)
+      await fetch('/api/imageupload', {
+        method: 'POST',
+        body : JSON.stringify({
+          image_url: signedData.signedUrl,
+          path: data.path,
+          user_id: user.id
+        })
+      })
     }
 
     toast.success("Images uploaded successfully");
@@ -116,9 +121,6 @@ export default function ImageUploadModal(props: ImageUploadModalProps) {
 
       return;
     }
-
-    console.log(">>> files", Array.from(files));
-    // TODO: add file upload logic
     await uploadAllImages(Array.from(files));
     toast.success("Files uploaded " + files.length);
   };
