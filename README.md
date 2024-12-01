@@ -18,7 +18,7 @@ This project was created during the *HackFrost Hackathon* using *Kestra*.
 - *Natural Language Search*: Query your photos using conversational language.  
 - *AI-Powered Tagging*: Automatically generates descriptions for uploaded images using Gemini’s Vision models.  
 - *Vector-Based Retrieval*: Queries are embedded and matched with image embeddings for precise results.  
-- *Efficient Storage: Images and metadata are stored securely in **Supabase*.  
+- *Efficient Storage*: Images and metadata are stored securely in *Supabase*.  
 
 ---
 
@@ -54,22 +54,22 @@ When you upload an image, Pixa follows these steps:
 ## 🚀 Deployment  
 
 ### Prerequisites  
-- Python 3.8+  
+- Python 3.8+, Node 18  
 - Kestra installed on your server  
 - Supabase account with a configured vector database  
 
 ### Setup Instructions  
 
 1. Clone the repository:  
-   bash
+   ```bash
    git clone https://github.com/kedaroo/codename-pixa.git  
    cd pixa  
-     
+   ```
 
 2. Install dependencies:  
-   bash
+   ```bash
    npm i  
-     
+   ```
 
 3. Configure environment variables:  
    - Create a .env file with your API keys and Supabase credentials.  
@@ -103,8 +103,9 @@ We welcome contributions! Feel free to:
 ### Steps to Contribute  
 1. Fork this repository.  
 2. Create a new branch:  
-   bash
-   git checkout -b feature-name  
+   ```bash
+   git checkout -b feature-name
+   ```
      
 3. Commit your changes and open a pull request.  
 
