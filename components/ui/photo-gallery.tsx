@@ -13,17 +13,21 @@ const PhotoGallery = ({ photos }: Props) => {
   const [currentPhoto, setCurrentPhoto] = useState<Photo | null>(null);
 
   return (
-    <div className="photo-gallery-con">
-      {photos.map((photo) => {
+    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-1 sm:gap-2">
+      {photos.slice(0).map((photo) => {
         return (
           <div
             key={photo.id}
-            className="photo-con"
+            className="cursor-pointer hover:scale-95 transition-all ease-in"
             onClick={() => {
               setCurrentPhoto(photo);
             }}
           >
-            <img src={photo.src} alt={photo.title} />
+            <img
+              src={photo.src}
+              alt={photo.title}
+              className="rounded-md sm:rounded-lg md:rounded-xl object-cover w-full h-28 md:h-36 lg:h-48"
+            />
           </div>
         );
       })}

@@ -30,14 +30,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className="min-h-screen flex flex-col items-center">
-            <div className="flex-1 w-full flex flex-col gap-20 items-center">
+          <main className="h-screen overflow-hidden flex flex-col items-center">
+            <div className="flex-1 w-full flex flex-col items-center gap-4">
               <nav className="sticky top-0 z-50 bg-background w-full flex justify-center h-16">
                 <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
                   <HeaderAuth />
                 </div>
               </nav>
-              <div className="flex flex-col gap-20 max-w-5xl w-full p-5">
+              <div className="bg-neutral-100 dark:bg-neutral-900 rounded-xl h-[calc(100vh-100px)] w-[calc(100vw-48px)] overflow-y-auto flex flex-col p-5">
                 {children}
               </div>
             </div>
