@@ -7,14 +7,10 @@ import { createClient } from "@/utils/supabase/client";
 import { MoveLeftIcon } from "lucide-react";
 import Link from "next/link";
 import { redirect, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-interface IPageProps {
-  searchParams: Promise<Record<string, string | undefined>>;
-}
-
-export default function Search(props: IPageProps) {
+function SearchPage() {
   const query = useSearchParams().get("query");
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [error, setError] = useState("");
@@ -100,4 +96,12 @@ export default function Search(props: IPageProps) {
       </main>
     </>
   );
+}
+
+export default function Search() {
+  return (
+    <Suspense>
+      <SearchPage />
+    </Suspense>
+  )
 }
