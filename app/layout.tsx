@@ -3,6 +3,8 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 import { GeistSans } from "geist/font/sans";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -40,6 +42,7 @@ export default function RootLayout({
               </div>
             </div>
           </main>
+          <ToastContainer />
         </ThemeProvider>
       </body>
     </html>
