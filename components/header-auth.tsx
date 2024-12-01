@@ -1,4 +1,5 @@
-import { signOutAction } from "@/app/actions";
+import { Input } from "@/components/ui/input";
+import { searchAction, signOutAction } from "@/app/actions";
 import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
@@ -19,6 +20,15 @@ export default async function AuthButton() {
         <Button type="submit" variant={"outline"}>
           Sign out
         </Button>
+      </form>
+      <form action={searchAction} style={{display: 'flex'}}>
+        <Input
+          type="text"
+          name="query"
+          placeholder="Show me beach photos"
+          required
+        />
+        <Button type="submit" variant={"outline"}>Search</Button>
       </form>
       <ThemeSwitcher />
     </div>

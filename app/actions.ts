@@ -134,3 +134,8 @@ export const signOutAction = async () => {
   await supabase.auth.signOut();
   return redirect("/");
 };
+
+export const searchAction = async (formData: FormData) => {
+  const query = formData.get("query") as string;
+  return redirect(`/search?query=${query}`);
+};
