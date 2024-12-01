@@ -18,10 +18,12 @@ const PhotoGallery = ({ photos }: Props) => {
 
   return (
     <div className="w-full flex justify-center">
-    <LightGallery 
-        elementClassNames=" grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-3 w-full"
-        speed={500} 
-        plugins={[lgThumbnail, lgFullscreen]}
+    <LightGallery
+      closable
+      download={false}
+      elementClassNames="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-3 w-full"
+      speed={500} 
+      plugins={[lgThumbnail, lgFullscreen]}
     >
       {photos.map((image, index) => (
         <a className="inline-block" key={index} href={image.src}>
