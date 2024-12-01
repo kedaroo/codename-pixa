@@ -16,35 +16,49 @@ export default async function AuthButton() {
   } = await supabase.auth.getUser();
 
   return user ? (
-    <div className="mt-4 flex items-center justify-between w-[90%] md:w-[80%] max-w-[1080px] py-2 px-3 rounded-full bg-opacity-20 bg-neutral-400 dark:bg-white/10 mx-auto backdrop-filter backdrop-blur-lg gap-2">
-      <h2 className="text-lg font-[600] ml-3">Pixa</h2>
-      <form action={searchAction} className="flex w-full mx-auto gap-1 items-center justify-center">
+    <div className="flex flex-col gap-2 w-full sm:w-fit mx-auto align-center justify-center">
+      <div className="flex items-center justify-between py-2 px-3 rounded-full bg-opacity-20 bg-neutral-400 dark:bg-white/10 backdrop-filter backdrop-blur-lg gap-4">
+        <h2 className="text-lg font-[600] ml-3">Pixa</h2>
+        <form action={searchAction} className="hidden sm:flex w-full mx-auto gap-1 items-center justify-center">
+          <Input
+            type="text"
+            name="query"
+            placeholder="Show me beach photos"
+            required
+            className="w-full rounded-full"
+          />
+          <Button type="submit" size="icon" variant={"ghost"}>
+            <Search />
+          </Button>
+        </form>
+        <div className="flex items-center gap-2">
+          <ThemeSwitcher />
+          <ImgUploadBtn />
+          <form action={signOutAction}>
+            <Button
+              title="Log out"
+              type="submit"
+              variant={"outline"}
+              size={"icon"}
+              className="rounded-full"
+            >
+              <LogOutIcon />
+            </Button>
+          </form>
+        </div>
+      </div>
+      <form action={searchAction} className="sm:hidden flex w-full mx-auto gap-1 items-center justify-center">
         <Input
           type="text"
           name="query"
           placeholder="Show me beach photos"
           required
-          className="w-[80%] rounded-full"
+          className="w-full rounded-full"
         />
-        <Button type="submit" size="icon" variant={"ghost"}>
+        <Button type="submit" size="icon" variant={"outline"}>
           <Search />
         </Button>
       </form>
-      <div className="flex items-center gap-2">
-        <ThemeSwitcher />
-        <ImgUploadBtn />
-        <form action={signOutAction}>
-          <Button
-            title="Log out"
-            type="submit"
-            variant={"outline"}
-            size={"icon"}
-            className="rounded-full"
-          >
-            <LogOutIcon />
-          </Button>
-        </form>
-      </div>
     </div>
   ) : (
     <div className="mt-4 flex items-center justify-between w-[90%] md:w-[60%] max-w-[1080px] py-2 px-3 rounded-full bg-opacity-20 bg-neutral-400 dark:bg-white/10 mx-auto backdrop-filter backdrop-blur-lg gap-2">
