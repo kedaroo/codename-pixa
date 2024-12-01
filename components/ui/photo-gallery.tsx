@@ -13,7 +13,7 @@ const PhotoGallery = ({ photos }: Props) => {
   const [currentPhoto, setCurrentPhoto] = useState<Photo | null>(null);
 
   return (
-    <div className="grid grid-cols-3 gap-1 sm:gap-2 md:flex flex-wrap">
+    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-1 sm:gap-2">
       {photos.slice(0).map((photo) => {
         return (
           <div
