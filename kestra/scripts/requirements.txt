@@ -1,0 +1,4 @@
+kestra
+google.generativeai
+httpx
+supabase
