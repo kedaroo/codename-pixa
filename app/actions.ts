@@ -4,6 +4,8 @@ import { encodedRedirect } from "@/utils/utils";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { toast } from "react-toastify";
+import { nanoid } from "nanoid";
 
 export const signUpAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
