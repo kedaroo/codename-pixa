@@ -8,7 +8,7 @@ export async function POST(request: Request) {
   formData.append('path', path)
   formData.append('user_id', user_id)
 
-  const auth = 'Basic ' + btoa(process.env.USERNAME + ':' + process.env.PASSWORD);
+  const auth = 'Basic ' + btoa(process.env.KESTRA_USERNAME + ':' + process.env.KESTRA_PASSWORD);
 
   const response = await fetch(`${process.env.KESTRA_URL}/executions/company.team/process_embedding`, {
     method: "POST",
