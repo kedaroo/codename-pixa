@@ -1,14 +1,11 @@
 "use client";
 import { Photo } from "@/components/types";
-import ImageUploadModal from "@/components/ui/image-upload-modal";
 import PhotoGallery from "@/components/ui/photo-gallery";
-import PhotoSlider from "@/components/ui/photo-slider";
 import { createClient } from "@/utils/supabase/client";
 import { MoveLeftIcon } from "lucide-react";
 import Link from "next/link";
 import { redirect, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
-import { toast } from "react-toastify";
 
 function SearchPage() {
   const query = useSearchParams().get("query");
