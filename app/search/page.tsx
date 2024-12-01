@@ -4,6 +4,7 @@ import ImageUploadModal from "@/components/ui/image-upload-modal";
 import PhotoGallery from "@/components/ui/photo-gallery";
 import PhotoSlider from "@/components/ui/photo-slider";
 import { createClient } from "@/utils/supabase/client";
+import { MoveLeftIcon } from "lucide-react";
 import { redirect, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -25,15 +26,15 @@ export default function Search(props: IPageProps) {
 
   useEffect(() => {
     const getPhotos = async () => {
-      setLoading(true)
-      setError('')
+      setLoading(true);
+      setError("");
       const {
         data: { user },
       } = await supabase.auth.getUser();
 
       if (!user) {
         redirect("/sign-up");
-        setLoading(false)
+        setLoading(false);
         return;
       }
 
@@ -53,13 +54,13 @@ export default function Search(props: IPageProps) {
 
       if (error) {
         setError("Couldn't find anything :(");
-        setLoading(false)
+        setLoading(false);
         return;
       }
 
       if (!data.length) {
         setError("Couldn't find anything :(");
-        setLoading(false)
+        setLoading(false);
         return;
       }
 
@@ -78,8 +79,8 @@ export default function Search(props: IPageProps) {
           });
       }
 
-      setPhotos(urls)
-      setLoading(false)
+      setPhotos(urls);
+      setLoading(false);
     };
 
     getPhotos();
@@ -88,7 +89,10 @@ export default function Search(props: IPageProps) {
   return (
     <>
       <main className="flex-1 flex flex-col gap-6 px-4">
-        Showing results for "{query}"
+        <div className="flex gap-4 ">
+          <MoveLeftIcon />
+          <div>Showing results for "{query}"</div>
+        </div>
         {loading && <div>Loading...</div>}
         {error && <div>{error}</div>}
         <PhotoGallery photos={photos} />
