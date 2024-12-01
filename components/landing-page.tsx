@@ -4,7 +4,7 @@ import { GithubIcon } from './ui/icons/GithubIcon'
 
 export default function LandingPage() {
   return (
-    <div className='w-full'>
+    <div className='w-full mt-24'>
       <div className='flex flex-col items-center gap-4'>
         <div className='bg-gradient-to-br from-indigo-500 to-pink-500 border-none border-white/50 shadow-pink-500/30 rounded-full px-4 pt-0.5 pb-1'>
           <span className="text-sm text-white">
