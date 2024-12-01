@@ -65,7 +65,7 @@ export default async function AuthButton() {
       </form>
     </div>
   ) : (
-    <div className="mt-4 flex items-center justify-between w-[90%] md:w-[60%] max-w-[1080px] py-2 px-3 rounded-full bg-opacity-20 bg-neutral-400 dark:bg-white/10 mx-auto backdrop-filter backdrop-blur-lg gap-2">
+    <div className="mt-0 flex items-center justify-between w-[90%] md:w-[60%] max-w-[1080px] py-2 px-3 rounded-full bg-opacity-20 bg-neutral-400 dark:bg-white/10 mx-auto backdrop-filter backdrop-blur-lg gap-2">
       <h2 className="text-lg font-[600] ml-4">
         <Link href='/'>
           Pixa
