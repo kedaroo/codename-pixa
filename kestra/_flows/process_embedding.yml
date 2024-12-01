@@ -1,0 +1,71 @@
+id: process_embedding
+namespace: company.team
+
+
+inputs:
+  - id: image_url
+    type: STRING
+    required: true
+  
+  - id: user_id
+    type: STRING
+    required: true
+  
+  - id: path
+    type: STRING
+    required: true
+
+tasks:
+  - id: log
+    type: io.kestra.plugin.core.log.Log
+    message: Hello World! 🚀
+
+  - id: gemini_description
+    type: io.kestra.plugin.scripts.python.Commands
+    env:
+      IMAGE_URL: "{{ inputs.image_url }}"
+      GEMINI_KEY: "{{ secret('GEMINI_KEY') }}"
+    taskRunner:
+      type: io.kestra.plugin.core.runner.Process
+    namespaceFiles:
+      enabled: true
+    beforeCommands:
+      - pip install google.generativeai httpx kestra
+    commands:
+      - python scripts/gemini-description.py
+
+
+  - id: gemini_embedding
+    type: io.kestra.plugin.scripts.python.Commands
+    env:
+      DESCRIPTION: "{{outputs.gemini_description.vars.description}}"
+      GEMINI_KEY: "{{ secret('GEMINI_KEY') }}"
+    taskRunner:
+      type: io.kestra.plugin.core.runner.Process
+    namespaceFiles:
+      enabled: true
+    beforeCommands:
+      - pip install google.generativeai httpx kestra
+    commands:
+      - python scripts/gemini-embedding.py
+
+  - id: supabase_save
+    type: io.kestra.plugin.scripts.python.Commands
+    env:
+      SUPABASE_URL: "{{secret('SUPABASE_URL')}}"
+      SUPABASE_KEY: "{{secret('SUPABASE_KEY')}}"
+      DESCRIPTION: "{{outputs.gemini_description.vars.description}}"
+      EMBEDDING: "{{outputs.gemini_embedding.vars.embedding}}"
+      USER_ID: "{{inputs.user_id}}"
+      SUPABASE_PATH: "{{inputs.path}}"
+    namespaceFiles:
+      enabled: true
+    taskRunner:
+      type: io.kestra.plugin.core.runner.Process
+    beforeCommands:
+      - pip install supabase kestra
+    commands:
+      - python scripts/supabase-save.py
+      
+      
+      
