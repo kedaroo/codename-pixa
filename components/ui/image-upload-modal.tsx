@@ -11,22 +11,19 @@ interface ImageUploadModalProps {
   closeModal: () => void;
 }
 
-export const uploadAllImages = async (images : File[]) => {
+export const uploadAllImages = async (images: File[]) => {
   try {
-    const supabase = await createClient();
+    const supabase = createClient();
     const {
       data: { user },
     } = await supabase.auth.getUser();
 
-    if(!user) {
-      toast.success("Couldn't fetch user data")
-      throw new Error("Couldn't fetch user data")
+    if (!user) {
+      toast.success("Couldn't fetch user data");
+      throw new Error("Couldn't fetch user data");
     }
 
-
     // const imageUploads = images.map(async(file) => {
-      
-      
 
     // if (error) {
     //   throw new Error(`Error uploading ${file.name}: ${error.message}`);
@@ -35,48 +32,30 @@ export const uploadAllImages = async (images : File[]) => {
     // })
     // await Promise.all(imageUploads);
 
-
     for (const img of images) {
-      const { data, error } = await supabase
-      .storage
-      .from('pictures')
-      .upload(user.id +'/'+ nanoid(), img);
+      console.log(`Uploading ${img.name}...`)
+      const { data, error } = await supabase.storage
+        .from("pictures")
+        .upload(user.id + "/" + nanoid(), img);
 
-      if(error) {
+      if (error) {
         toast.error("Image couldn't get uploaded");
         throw new Error("Image couldn't get uploaded");
       }
 
+      console.log(`Generating signed URL ${img.name}...`)
+      const { data: signedData, error: signedError } = await supabase.storage
+        .from("pictures")
+        .createSignedUrl(data.path, 60 * 60);
+
+      console.log(`Generated signed URL: ${signedData?.signedUrl}`)
     }
 
-    toast.success('Images uploaded successfully')
-    const fetchedImages = await getAllImages()
-
-    if(fetchedImages === undefined) {
-      toast.error("Couldn't fetch the images");
-      throw new Error("Couldn't fetch the images")
-    }
-
-    for (const img of fetchedImages) {
-      const { data: signedData, error: signedError } = await supabase
-        .storage
-        .from('pictures')
-        .createSignedUrl(user.id + '/' + img.name, 60 * 60);
-        
-      console.log(img.name);
-      if(signedError) {
-        toast.error("Image couldn't get uploaded");
-        throw new Error("Image couldn't get uploaded");
-      }
-
-      console.log('>>> signed url ->', signedData.signedUrl);
-    }
-
-    return fetchedImages;
+    toast.success("Images uploaded successfully");
   } catch {
-    toast.error('Oops! Something went wrong while uploading images')
+    toast.error("Oops! Something went wrong while uploading images");
   }
-}
+};
 
 export const getAllImages = async () => {
   try {
@@ -85,34 +64,31 @@ export const getAllImages = async () => {
       data: { user },
     } = await supabase.auth.getUser();
 
-    if(!user) {
-      toast.success("Couldn't fetch user data")
-      throw new Error("Couldn't fetch user data")
+    if (!user) {
+      toast.success("Couldn't fetch user data");
+      throw new Error("Couldn't fetch user data");
     }
 
-    const { data, error } = await supabase
-      .storage
-      .from('pictures')
+    const { data, error } = await supabase.storage
+      .from("pictures")
       .list(user.id, {
         limit: 100,
         offset: 0,
-      })
-    
-    if(error) {
+      });
+
+    if (error) {
       throw new Error("Couldn't fetch the images");
     }
 
     return data;
   } catch {
-    toast.error("Couldn't fetch images")
+    toast.error("Couldn't fetch images");
   }
-}
+};
 
 export default function ImageUploadModal(props: ImageUploadModalProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragOver, setIsDragOver] = useState(false);
-
-
 
   const uploadFiles = async (filesList: FileList | null) => {
     if (!filesList || filesList.length === 0) {
@@ -138,7 +114,7 @@ export default function ImageUploadModal(props: ImageUploadModalProps) {
 
     console.log(">>> files", Array.from(files));
     // TODO: add file upload logic
-    await uploadAllImages(Array.from(files))
+    await uploadAllImages(Array.from(files));
     toast.success("Files uploaded " + files.length);
   };
 
@@ -198,6 +174,7 @@ export default function ImageUploadModal(props: ImageUploadModalProps) {
                 </button>
                 <input
                   type="file"
+                  multiple
                   accept="image/*"
                   className="hidden"
                   ref={fileInputRef}
