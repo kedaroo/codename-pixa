@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
   const model = genAI.getGenerativeModel({ model: "text-embedding-004"});
 
-  const result = await model.embedContent(query.query);
+  const result = await model.embedContent(query);
 
   return NextResponse.json(result.embedding)
 }
