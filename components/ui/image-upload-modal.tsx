@@ -48,7 +48,12 @@ export const uploadAllImages = async (images: File[]) => {
         .from("pictures")
         .createSignedUrl(data.path, 60 * 60);
 
-      console.log(`Generated signed URL: ${signedData?.signedUrl}`)
+      if (signedError) {
+        toast.error("Image couldn't get uploaded");
+        throw new Error("Image couldn't get uploaded");
+      }
+
+      console.log(`Generated signed URL: ${signedData.signedUrl}`)
     }
 
     toast.success("Images uploaded successfully");
