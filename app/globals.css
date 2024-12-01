@@ -85,3 +85,36 @@
 ::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
+
+
+.animate-modal-open {
+  animation: animate-modal-open 100ms ease-in;
+}
+
+.animate-modal-closed {
+  animation: animate-modal-closed 100ms ease-in;
+}
+
+@keyframes animate-modal-open {
+  0% {
+    scale: 0.9;
+    opacity: 0;
+  } 
+
+  100% {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+@keyframes animate-modal-closed {
+  0% {
+    scale: 1;
+    opacity: 1;
+  }
+
+  100% {
+    scale: 0.9;
+    opacity: 0;
+  }
+}
