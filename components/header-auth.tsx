@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 import { createClient } from "@/utils/supabase/server";
 import { ThemeSwitcher } from "./theme-switcher";
 import { LogOutIcon, Search } from "lucide-react";
+import ImgUploadBtn from "./image-upload-btn";
 
 export default async function AuthButton() {
   const supabase = await createClient();
@@ -31,6 +32,7 @@ export default async function AuthButton() {
       </form>
       <div className="flex items-center gap-2">
         <ThemeSwitcher />
+        <ImgUploadBtn />
         <form action={signOutAction}>
           <Button
             title="Log out"
