@@ -37,7 +37,7 @@ export default function RootLayout({
                   <HeaderAuth />
                 </div>
               </nav>
-              <div className="bg-zinc-100 dark:bg-zinc-900 rounded-xl h-[calc(100vh-100px)] w-[calc(100vw-48px)] overflow-y-auto flex flex-col p-5">
+              <div className="bg-neutral-100 dark:bg-neutral-900 rounded-xl h-[calc(100vh-100px)] w-[calc(100vw-48px)] overflow-y-auto flex flex-col p-5">
                 {children}
               </div>
             </div>

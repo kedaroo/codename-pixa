@@ -15,7 +15,7 @@ export default async function AuthButton() {
   } = await supabase.auth.getUser();
 
   return user ? (
-    <div className="mt-4 flex items-center justify-between w-[90%] md:w-[80%] max-w-[1080px] py-2 px-3 rounded-full bg-opacity-20 bg-neutral-400 dark:bg-white/5 mx-auto backdrop-filter backdrop-blur-lg gap-2">
+    <div className="mt-4 flex items-center justify-between w-[90%] md:w-[80%] max-w-[1080px] py-2 px-3 rounded-full bg-opacity-20 bg-neutral-400 dark:bg-white/10 mx-auto backdrop-filter backdrop-blur-lg gap-2">
       <h2 className="text-lg font-[600] ml-3">Pixa</h2>
       <form action={searchAction} className="flex w-full mx-auto gap-1 items-center justify-center">
         <Input
