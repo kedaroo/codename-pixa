@@ -5,6 +5,7 @@ import { XIcon } from "lucide-react";
 import { nanoid } from "nanoid";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
+import { Button } from "./button";
 
 interface ImageUploadModalProps {
   open: boolean;
@@ -99,8 +100,12 @@ export const getAllImages = async () => {
 export default function ImageUploadModal(props: ImageUploadModalProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragOver, setIsDragOver] = useState(false);
-
+  const [loading, setLoading] = useState(false)
   const uploadFiles = async (filesList: FileList | null) => {
+    if(loading) {
+      toast.error('Currently also loading');
+      return;
+    }
     if (!filesList || filesList.length === 0) {
       toast.error("Please select files");
       return;
@@ -121,19 +126,26 @@ export default function ImageUploadModal(props: ImageUploadModalProps) {
 
       return;
     }
+    setLoading(true);
     await uploadAllImages(Array.from(files));
+    setLoading(false);
     toast.success("Files uploaded " + files.length);
   };
 
   return (
-    <div>
+    <>
       <Dialog.Root open={props.open}>
         <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-black/90" />
-          <Dialog.Content className="fixed inset-1/4 bg-background textp-6 rounded-md shadow-lg rounded-xl p-4 flex flex-col justify-between">
+          <Dialog.Overlay className="fixed inset-0" />
+          <Dialog.Content 
+            className={`fixed z-[10000000]  ${props.open ? 'animate-modal-open' : 'animate-modal-closed'} shadow-[0px_0px_10000px_1000px_rgba(0,0,0,0.5)] inset-1/4 bg-background textp-6 rounded-xl p-4 flex flex-col justify-between`}>
             <div className="flex justify-between">
               <Dialog.Title className="text-xl">Modal Title</Dialog.Title>
-              <button onClick={props.closeModal}>
+              <button onClick={() => {
+                setTimeout(() => {
+                  props.closeModal()
+                },100)
+              }}>
                 {" "}
                 <XIcon />
               </button>
@@ -157,28 +169,27 @@ export default function ImageUploadModal(props: ImageUploadModalProps) {
                   uploadFiles(files);
                   setIsDragOver(false);
                 }}
-                className={`border border-2 border-dashed border-gray-500 p-4 rounded-md h-[100px] flex items-center justify-center h-full ${isDragOver ? "bg-blue-400/10" : ""}`}
+                className={`border border-2 border-dashed border-gray-300 p-4 rounded-2xl min-h-[100px] flex items-center justify-center h-full ${isDragOver ? "bg-blue-400/10" : ""}`}
               >
                 Select images or drag them here
               </span>
 
               <span className="mt-4 flex justify-end gap-2">
-                <button
-                  className="border border-1 border-dashed border-gray-500 rounded-sm px-3 py-1"
+                <Button
+                  variant={'outline'}
                   type="button"
                   onClick={props.closeModal}
                 >
                   Cancel
-                </button>
-                <button
-                  className="rounded-sm px-3 py-1 bg-blue-400"
+                </Button>
+                <Button
                   type="button"
                   onClick={() => {
                     fileInputRef.current?.click();
                   }}
                 >
                   Upload
-                </button>
+                </Button>
                 <input
                   type="file"
                   multiple
@@ -197,6 +208,6 @@ export default function ImageUploadModal(props: ImageUploadModalProps) {
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
-    </div>
+      </>
   );
 }
