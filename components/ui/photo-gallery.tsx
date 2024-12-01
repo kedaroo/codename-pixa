@@ -28,7 +28,7 @@ const PhotoGallery = ({ photos }: Props) => {
     >
       {photos.map((image, index) => (
         <a className="inline-block" key={index} href={image.src}>
-          <SkeletonImage className="block object-cover rounded-md md:rounded-2xl h-28 sm:h-32 md:h-40 lg:h-48 w-full" src={image.src} alt={image.title} />
+          <SkeletonImage className="block object-cover rounded-md md:rounded-2xl h-28 sm:h-32 md:h-40 lg:h-48 w-full" src={image.src} alt={image.title || ''} />
         </a>
       ))}
     </LightGallery>

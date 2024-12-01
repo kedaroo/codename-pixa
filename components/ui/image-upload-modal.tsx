@@ -129,7 +129,7 @@ export default function ImageUploadModal(props: ImageUploadModalProps) {
     setLoading(true);
     await uploadAllImages(Array.from(files));
     setLoading(false);
-    toast.success("Files uploaded " + files.length);
+    props.closeModal()
   };
 
   return (
@@ -138,10 +138,12 @@ export default function ImageUploadModal(props: ImageUploadModalProps) {
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0" />
           <Dialog.Content 
-            className={`fixed z-[10000000]  ${props.open ? 'animate-modal-open' : 'animate-modal-closed'} shadow-[0px_0px_10000px_1000px_rgba(0,0,0,0.5)] inset-1/4 bg-background textp-6 rounded-xl p-4 flex flex-col justify-between`}>
+            className={`fixed z-[10000000]  ${props.open ? 'animate-modal-open' : 'animate-modal-closed'} shadow-[0px_0px_10000px_1000px_rgba(0,0,0,0.5)] inset-1/4 bg-background textp-6 rounded-xl pt-5 pb-2 px-6 flex flex-col justify-between`}>
             <div className="flex justify-between">
-              <Dialog.Title className="text-xl">Modal Title</Dialog.Title>
-              <button onClick={() => {
+              <Dialog.Title className="text-xl">Upload Your Images</Dialog.Title>
+              <button 
+              
+              onClick={() => {
                 setTimeout(() => {
                   props.closeModal()
                 },100)
@@ -169,9 +171,14 @@ export default function ImageUploadModal(props: ImageUploadModalProps) {
                   uploadFiles(files);
                   setIsDragOver(false);
                 }}
-                className={`border border-2 border-dashed border-gray-300 p-4 rounded-2xl min-h-[100px] flex items-center justify-center h-full ${isDragOver ? "bg-blue-400/10" : ""}`}
+                onClick={() => {
+                  if(!loading) {
+                    fileInputRef.current?.click();
+                  }
+                }}
+                className={`border-2 border-dashed border-gray-300 hover:border-gray-500 transition-all duration-150 p-4 rounded-2xl min-h-[100px] flex items-center justify-center h-full ${isDragOver ? "bg-blue-400/10" : ""}`}
               >
-                Select images or drag them here
+                {loading ? "Uploading..." : "Select images or drag them here"}
               </span>
 
               <span className="mt-4 flex justify-end gap-2">
@@ -184,11 +191,12 @@ export default function ImageUploadModal(props: ImageUploadModalProps) {
                 </Button>
                 <Button
                   type="button"
+                  disabled={loading}
                   onClick={() => {
                     fileInputRef.current?.click();
                   }}
                 >
-                  Upload
+                  {loading ? "Uploading..." : "Upload"}
                 </Button>
                 <input
                   type="file"
