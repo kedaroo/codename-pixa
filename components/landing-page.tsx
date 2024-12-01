@@ -7,8 +7,8 @@ export default function LandingPage() {
     <div className='w-full'>
       <div className='flex flex-col items-center gap-4'>
         <div className='bg-gradient-to-br from-indigo-500 to-pink-500 border-none border-white/50 shadow-pink-500/30 rounded-full px-4 pt-0.5 pb-1'>
-          <span className="text-xs text-white">
-            ✨ Introducing Codename Pixa
+          <span className="text-sm text-white">
+            ✨ Introducing Pixa
           </span>
         </div>
         <div className='text-6xl font-semibold tracking-tight text-center justify-center'>
