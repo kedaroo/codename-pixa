@@ -8,6 +8,7 @@ import 'lightgallery/css/lg-thumbnail.css';
 import 'lightgallery/css/lg-fullscreen.css';
 import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import lgFullscreen from 'lightgallery/plugins/fullscreen';
+import SkeletonImage from "./image-skeleton";
 
 interface Props {
   photos: Photo[];
@@ -27,7 +28,7 @@ const PhotoGallery = ({ photos }: Props) => {
     >
       {photos.map((image, index) => (
         <a className="inline-block" key={index} href={image.src}>
-          <img className="block object-cover rounded-md md:rounded-2xl h-28 sm:h-32 md:h-40 lg:h-48 w-full" src={image.src} alt={image.title} />
+          <SkeletonImage className="block object-cover rounded-md md:rounded-2xl h-28 sm:h-32 md:h-40 lg:h-48 w-full" src={image.src} alt={image.title} />
         </a>
       ))}
     </LightGallery>
