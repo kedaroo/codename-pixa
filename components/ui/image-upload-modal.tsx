@@ -1,6 +1,8 @@
 "use client";
+import { createClient } from "@/utils/supabase/client";
 import * as Dialog from "@radix-ui/react-dialog";
 import { XIcon } from "lucide-react";
+import { nanoid } from "nanoid";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -9,13 +11,111 @@ interface ImageUploadModalProps {
   closeModal: () => void;
 }
 
+export const uploadAllImages = async (images : File[]) => {
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if(!user) {
+      toast.success("Couldn't fetch user data")
+      throw new Error("Couldn't fetch user data")
+    }
+
+
+    // const imageUploads = images.map(async(file) => {
+      
+      
+
+    // if (error) {
+    //   throw new Error(`Error uploading ${file.name}: ${error.message}`);
+    // }
+    // return data;
+    // })
+    // await Promise.all(imageUploads);
+
+
+    for (const img of images) {
+      const { data, error } = await supabase
+      .storage
+      .from('pictures')
+      .upload(user.id +'/'+ nanoid(), img);
+
+      if(error) {
+        toast.error("Image couldn't get uploaded");
+        throw new Error("Image couldn't get uploaded");
+      }
+
+    }
+
+    toast.success('Images uploaded successfully')
+    const fetchedImages = await getAllImages()
+
+    if(fetchedImages === undefined) {
+      toast.error("Couldn't fetch the images");
+      throw new Error("Couldn't fetch the images")
+    }
+
+    for (const img of fetchedImages) {
+      const { data: signedData, error: signedError } = await supabase
+        .storage
+        .from('pictures')
+        .createSignedUrl(user.id + '/' + img.name, 60 * 60);
+        
+      console.log(img.name);
+      if(signedError) {
+        toast.error("Image couldn't get uploaded");
+        throw new Error("Image couldn't get uploaded");
+      }
+
+      console.log('>>> signed url ->', signedData.signedUrl);
+    }
+
+    return fetchedImages;
+  } catch {
+    toast.error('Oops! Something went wrong while uploading images')
+  }
+}
+
+export const getAllImages = async () => {
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if(!user) {
+      toast.success("Couldn't fetch user data")
+      throw new Error("Couldn't fetch user data")
+    }
+
+    const { data, error } = await supabase
+      .storage
+      .from('pictures')
+      .list(user.id, {
+        limit: 100,
+        offset: 0,
+      })
+    
+    if(error) {
+      throw new Error("Couldn't fetch the images");
+    }
+
+    return data;
+  } catch {
+    toast.error("Couldn't fetch images")
+  }
+}
+
 export default function ImageUploadModal(props: ImageUploadModalProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragOver, setIsDragOver] = useState(false);
 
-  const uploadFiles = (filesList: FileList | null) => {
+
+
+  const uploadFiles = async (filesList: FileList | null) => {
     if (!filesList || filesList.length === 0) {
-      console.log(">>> no files uploaded");
       toast.error("Please select files");
       return;
     }
@@ -28,10 +128,8 @@ export default function ImageUploadModal(props: ImageUploadModalProps) {
 
     if (isAnyOfTheFilesNotImage) {
       if (files.length === 1) {
-        console.log(">>> file uploaded should be of type image");
         toast.error("File uploaded should be of type image");
       } else {
-        console.log(">>> all files uploaded should be of type image");
         toast.error("All files uploaded should be of type image");
       }
 
@@ -40,6 +138,7 @@ export default function ImageUploadModal(props: ImageUploadModalProps) {
 
     console.log(">>> files", Array.from(files));
     // TODO: add file upload logic
+    await uploadAllImages(Array.from(files))
     toast.success("Files uploaded " + files.length);
   };
 
