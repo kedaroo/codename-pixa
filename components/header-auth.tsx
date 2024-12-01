@@ -18,7 +18,11 @@ export default async function AuthButton() {
   return user ? (
     <div className="flex flex-col gap-2 w-full sm:w-fit mx-auto align-center justify-center">
       <div className="flex items-center justify-between py-2 px-3 rounded-full bg-opacity-20 bg-neutral-400 dark:bg-white/10 backdrop-filter backdrop-blur-lg gap-4">
-        <h2 className="text-lg font-[600] ml-3">Pixa</h2>
+        <h2 className="text-lg font-[600] ml-3">
+          <Link href='/'>
+            Pixa
+          </Link>
+        </h2>
         <form action={searchAction} className="hidden sm:flex w-full mx-auto gap-1 items-center justify-center">
           <Input
             type="text"
@@ -62,7 +66,11 @@ export default async function AuthButton() {
     </div>
   ) : (
     <div className="mt-4 flex items-center justify-between w-[90%] md:w-[60%] max-w-[1080px] py-2 px-3 rounded-full bg-opacity-20 bg-neutral-400 dark:bg-white/10 mx-auto backdrop-filter backdrop-blur-lg gap-2">
-      <h2 className="text-lg font-[600] ml-4">Pixa</h2>
+      <h2 className="text-lg font-[600] ml-4">
+        <Link href='/'>
+          Pixa
+        </Link>
+      </h2>
       <div className="flex items-center justify-center gap-4 ml-2">
         <a
           className="hover:font-[600] transition-all duration-100 border-b border-b-transparent hover:border-b-black dark:hover:border-b-white"

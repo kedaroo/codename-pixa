@@ -5,6 +5,7 @@ import PhotoGallery from "@/components/ui/photo-gallery";
 import PhotoSlider from "@/components/ui/photo-slider";
 import { createClient } from "@/utils/supabase/client";
 import { MoveLeftIcon } from "lucide-react";
+import Link from "next/link";
 import { redirect, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -89,10 +90,10 @@ export default function Search(props: IPageProps) {
   return (
     <>
       <main className="flex-1 flex flex-col gap-6 px-4">
-        <div className="flex gap-4 ">
+        <Link href='/' className="flex gap-4 ">
           <MoveLeftIcon />
           <div>Showing results for "{query}"</div>
-        </div>
+        </Link>
         {loading && <div>Loading...</div>}
         {error && <div>{error}</div>}
         <PhotoGallery photos={photos} />

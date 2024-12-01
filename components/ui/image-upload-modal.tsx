@@ -24,15 +24,6 @@ export const uploadAllImages = async (images: File[]) => {
       throw new Error("Couldn't fetch user data");
     }
 
-    // const imageUploads = images.map(async(file) => {
-
-    // if (error) {
-    //   throw new Error(`Error uploading ${file.name}: ${error.message}`);
-    // }
-    // return data;
-    // })
-    // await Promise.all(imageUploads);
-
     for (const img of images) {
       const { data, error } = await supabase.storage
         .from("pictures")
